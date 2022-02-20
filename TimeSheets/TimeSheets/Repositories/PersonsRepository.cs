@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TimeSheets.Models;
 
 namespace TimeSheets.Repositories
@@ -65,32 +66,41 @@ namespace TimeSheets.Repositories
 
         public Person GetPersonById(int id)
         {
-            throw new System.NotImplementedException();
+            return Data.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public Person GetPersonByName(string firstName)
         {
-            throw new System.NotImplementedException();
+            return Data.Where(p => p.FirstName == firstName).FirstOrDefault();
         }
 
         public List<Person> GetPersons(int from, int to)
         {
-            throw new System.NotImplementedException();
+            List<Person> persons = new List<Person>();
+            for (int i = from; i <= to; i++)
+            {
+                persons.Add(Data[i]);
+            }
+
+            return persons;
         }
 
         public void AddPerson(Person person)
         {
-            throw new System.NotImplementedException();
+            Data.Add(person);
         }
 
         public void UpdatePerson(Person person)
         {
-            throw new System.NotImplementedException();
+            var lastPerson = Data.Where(p => p.Id == person.Id).FirstOrDefault();
+            Data.Remove(lastPerson);
+            Data.Add(person);
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var person = Data.Where(p => p.Id == id).FirstOrDefault();
+            Data.Remove(person);
         }
     }
 }

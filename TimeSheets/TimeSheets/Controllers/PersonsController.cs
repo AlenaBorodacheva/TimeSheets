@@ -7,8 +7,8 @@ using TimeSheets.Requests;
 
 namespace TimeSheets.Controllers
 {
-    [Route("api/persons")]
     [ApiController]
+    [Route("api/persons")]
     public class PersonsController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -23,7 +23,7 @@ namespace TimeSheets.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetPersonById([FromRoute]int id)
+        public IActionResult GetPersonById(int id)
         {
             Person person = _repository.GetPersonById(id);
             _logger.LogTrace(1, $"Query GetPersonById with param id = {id}");
@@ -32,7 +32,7 @@ namespace TimeSheets.Controllers
 
         [HttpGet]
         [Route("searchTerm={term}")]
-        public IActionResult GetPersonByName([FromRoute] string term)
+        public IActionResult GetPersonByName(string term)
         {
             Person person = _repository.GetPersonByName(term);
             _logger.LogTrace(1, $"Query GetPersonByName with param term = {term}");
@@ -41,7 +41,7 @@ namespace TimeSheets.Controllers
 
         [HttpGet]
         [Route("skip={skip}&take={take}")]
-        public IActionResult GetPersons([FromRoute] int skip, [FromRoute] int take)
+        public IActionResult GetPersons(int skip, int take)
         {
             List<Person> persons = _repository.GetPersons(skip, take);
             _logger.LogTrace(1, $"Query GetPersons with params skip = {skip} and take = {take}");
@@ -64,7 +64,7 @@ namespace TimeSheets.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPut]
         public IActionResult UpdatePerson([FromBody] PersonUpdateRequest request)
         {
             _repository.UpdatePerson(new Person
@@ -84,7 +84,7 @@ namespace TimeSheets.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeletePerson([FromRoute] int id)
+        public IActionResult DeletePerson(int id)
         {
             _repository.Delete(id);
             _logger.LogTrace(1, $"Query DeletePerson with param id = {id}");
