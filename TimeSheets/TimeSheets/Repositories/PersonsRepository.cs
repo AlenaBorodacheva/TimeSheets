@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TimeSheets.Models;
 
@@ -66,7 +67,7 @@ namespace TimeSheets.Repositories
 
         public Person GetPersonById(int id)
         {
-            return Data.Where(p => p.Id == id).FirstOrDefault();
+            return Data.Where(p => p.Id == id).SingleOrDefault();
         }
 
         public Person GetPersonByName(string firstName)
@@ -76,6 +77,11 @@ namespace TimeSheets.Repositories
 
         public List<Person> GetPersons(int from, int to)
         {
+            if (to > Data.Count)
+            {
+                throw new Exception("Диапазон превысил количество значений.");
+            }
+
             List<Person> persons = new List<Person>();
             for (int i = from; i <= to; i++)
             {
@@ -101,6 +107,11 @@ namespace TimeSheets.Repositories
         {
             var person = Data.Where(p => p.Id == id).FirstOrDefault();
             Data.Remove(person);
+        }
+
+        public List<Person> GetAllPersons()
+        {
+            return Data;
         }
     }
 }

@@ -11,5 +11,6 @@ namespace TimeSheets.Repositories
         void AddPerson(Person person);
         void UpdatePerson(Person person);
         void Delete(int id);
+        List<Person> GetAllPersons();
     }
 }
